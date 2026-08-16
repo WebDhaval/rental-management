@@ -21,7 +21,7 @@ const statusTone: Record<PaymentStatus, 'success' | 'warning' | 'danger' | 'info
   partial: 'info',
 };
 
-const methods: PaymentMethod[] = ['UPI', 'Bank Transfer', 'Cash', 'Card', 'Credit Card'];
+const methods: PaymentMethod[] = ['UPI', 'Bank Transfer', 'Cash', 'Card'];
 
 interface DbPayment {
   id: string;
@@ -55,7 +55,7 @@ function fromDb(r: DbPayment): Payment {
     unitId: r.unit_id,
     amount: Number(r.amount) || 0,
     dueDate: r.due_date || '',
-    paidDate: r.paid_date || undefined,
+    paidDate: r.paid_date ?? null,
     method: (r.method || 'Bank Transfer') as PaymentMethod,
     status: (r.status || 'pending') as PaymentStatus,
   };

@@ -98,6 +98,7 @@ function getInitialTableData(table: string): DbRecord[] {
       phone: o.phone,
       address: o.address,
       tax_number: o.taxNumber,
+      gstin: o.gstin || null,
       bank_details: o.bankDetails,
       properties_owned: o.propertiesOwned,
       created_at: now,

@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/Button';
 import { AreaChart, BarChart, DonutChart } from '@/components/charts/Charts';
 import { PageHeader } from '@/components/shared/PageHeader';
 import { supabase } from '@/lib/supabase';
-import type { Property, Tenant, Lease, Payment, MaintenanceTicket, Activity } from '@/lib/types';
+import type { Property, Tenant, Lease, Payment, MaintenanceTicket, Activity, PaymentMethod } from '@/lib/types';
 import { formatCurrency, formatDate, timeAgo, daysUntil, cn } from '@/lib/utils';
 import { useRouter } from '@/lib/router';
 
@@ -28,16 +28,21 @@ interface DbProperty {
   name: string;
   address?: string;
   city?: string;
-  state?: string;
-  zip_code?: string;
   type?: Property['type'];
+  units_count?: number;
   units?: number;
   rent?: number;
+  bedrooms?: number;
+  bathrooms?: number;
   status?: Property['status'];
+  occupancy?: number;
+  image?: string;
+  gallery?: string[];
   owner?: string;
   owner_id?: string;
-  year_built?: number;
   amenities?: string[];
+  rules?: string[];
+  description?: string;
 }
 
 interface DbTenant {
@@ -169,16 +174,20 @@ export function DashboardPage() {
         name: r.name,
         address: r.address || '',
         city: r.city || '',
-        state: r.state || '',
-        zipCode: r.zip_code || '',
-        type: r.type || 'Residential',
-        units: Number(r.units) || 1,
-        rent: Number(r.rent) || 0,
-        status: r.status || 'available',
+        type: r.type || 'Apartment',
         owner: r.owner || '',
         ownerId: r.owner_id,
-        yearBuilt: Number(r.year_built) || 2020,
+        rent: Number(r.rent) || 0,
+        bedrooms: Number(r.bedrooms) || 0,
+        bathrooms: Number(r.bathrooms) || 0,
+        status: r.status || 'available',
+        occupancy: Number(r.occupancy) || 0,
+        image: r.image || '',
+        gallery: r.gallery || [],
         amenities: r.amenities || [],
+        rules: r.rules || [],
+        description: r.description || '',
+        unitsCount: Number(r.units_count ?? r.units) || 1,
       }))
     );
 
@@ -203,6 +212,7 @@ export function DashboardPage() {
     setLeases(
       ((leasesRes.data as DbLease[]) ?? []).map((r) => ({
         id: r.id,
+        number: r.lease_id || `LSE-${r.id.slice(0, 4)}`,
         leaseId: r.lease_id || `LSE-${r.id.slice(0, 4)}`,
         property: r.property || '',
         propertyId: r.property_id,
@@ -212,8 +222,11 @@ export function DashboardPage() {
         tenantId: r.tenant_id,
         startDate: r.start_date || '',
         endDate: r.end_date || '',
+        monthlyRent: Number(r.rent) || 0,
         rent: Number(r.rent) || 0,
+        securityDeposit: Number(r.deposit) || 0,
         deposit: Number(r.deposit) || 0,
+        dueDate: 1,
         status: r.status || 'active',
       }))
     );
@@ -229,8 +242,8 @@ export function DashboardPage() {
         unit: r.unit || '',
         amount: Number(r.amount) || 0,
         dueDate: r.due_date || '',
-        paidDate: r.paid_date || undefined,
-        method: r.method || 'Bank Transfer',
+        paidDate: r.paid_date ?? null,
+        method: (r.method || 'Bank Transfer') as PaymentMethod,
         status: r.status || 'pending',
       }))
     );
@@ -255,7 +268,11 @@ export function DashboardPage() {
     setActivities(
       ((actRes.data as DbActivity[]) ?? []).map((r) => ({
         id: r.id,
+        actor: r.user || 'Admin',
         action: r.action || 'update',
+        target: r.title || '',
+        time: r.created_at || new Date().toISOString(),
+        type: 'update',
         title: r.title || '',
         description: r.description || '',
         user: r.user || 'Admin',
@@ -539,7 +556,7 @@ export function DashboardPage() {
                   <p className="text-xs text-muted-foreground">{a.description}</p>
                 </div>
                 <div className="text-right shrink-0 text-xs text-muted-foreground">
-                  <p>{timeAgo(a.createdAt)}</p>
+                  <p>{timeAgo(a.createdAt || a.time)}</p>
                   <p className="text-[10px]">by {a.user}</p>
                 </div>
               </div>

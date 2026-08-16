@@ -120,9 +120,10 @@ interface BarChartProps {
   color?: string;
   color2?: string;
   formatValue?: (v: number) => string;
+  legend?: { label: string; color: string }[];
 }
 
-export function BarChart({ data, height = 220, color = 'hsl(217 91% 60%)', color2, formatValue }: BarChartProps) {
+export function BarChart({ data, height = 220, color = 'hsl(217 91% 60%)', color2, formatValue, legend }: BarChartProps) {
   const [hover, setHover] = useState<number | null>(null);
   const width = 600;
   const padX = 40;
@@ -134,6 +135,16 @@ export function BarChart({ data, height = 220, color = 'hsl(217 91% 60%)', color
 
   return (
     <div className="w-full">
+      {legend && (
+        <div className="flex items-center gap-4 mb-3">
+          {legend.map((l, i) => (
+            <div key={i} className="flex items-center gap-1.5">
+              <span className="h-2.5 w-2.5 rounded-full" style={{ background: l.color }} />
+              <span className="text-xs text-muted-foreground">{l.label}</span>
+            </div>
+          ))}
+        </div>
+      )}
       <svg viewBox={`0 0 ${width} ${height}`} className="w-full" style={{ height }} preserveAspectRatio="none">
         {Array.from({ length: 4 }).map((_, i) => {
           const gy = padY + (chartH / 3) * i;

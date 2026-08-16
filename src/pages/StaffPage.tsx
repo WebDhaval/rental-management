@@ -50,7 +50,7 @@ function fromDb(r: DbStaff): Staff {
     email: r.email,
     phone: r.phone || '',
     role: (r.role || 'Property Manager') as StaffRole,
-    avatar: r.avatar,
+    avatar: r.avatar || '',
     joinedAt: r.joined_at || new Date().toISOString().slice(0, 10),
     status: (r.status || 'active') as Staff['status'],
   };
@@ -278,6 +278,7 @@ function StaffFormModal({ staff, onSave, onClose, saving }: { staff: Staff | nul
     name: '',
     email: '',
     phone: '',
+    avatar: '',
     role: 'Property Manager',
     joinedAt: new Date().toISOString().slice(0, 10),
     status: 'active',

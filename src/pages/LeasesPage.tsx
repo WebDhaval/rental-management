@@ -18,10 +18,12 @@ const statusTone: Record<LeaseStatus, 'success' | 'warning' | 'neutral' | 'dange
   expiring: 'warning',
   terminated: 'danger',
   expired: 'neutral',
+  pending: 'warning',
 };
 
 interface DbLease {
   id: string;
+  number?: string;
   lease_id?: string;
   property: string;
   property_id?: string;
@@ -31,8 +33,11 @@ interface DbLease {
   tenant_id?: string;
   start_date: string;
   end_date: string;
+  monthly_rent?: number;
   rent: number;
+  security_deposit?: number;
   deposit: number;
+  due_date?: number;
   status: string;
   terms?: string;
 }
@@ -42,9 +47,13 @@ interface UnitItem { id: string; unit_number: string; property_id: string; rent:
 interface TenantItem { id: string; name: string; email: string }
 
 function fromDb(r: DbLease): Lease {
+  const leaseNumber = r.number || r.lease_id || `LSE-${r.id.slice(0, 4).toUpperCase()}`;
+  const monthlyRent = Math.max(0, Number(r.monthly_rent ?? r.rent) || 0);
+  const securityDeposit = Math.max(0, Number(r.security_deposit ?? r.deposit) || 0);
   return {
     id: r.id,
-    leaseId: r.lease_id || `LSE-${r.id.slice(0, 4).toUpperCase()}`,
+    number: leaseNumber,
+    leaseId: leaseNumber,
     property: r.property || '',
     propertyId: r.property_id || '',
     unit: r.unit || '',
@@ -53,16 +62,22 @@ function fromDb(r: DbLease): Lease {
     tenantId: r.tenant_id || '',
     startDate: r.start_date || '',
     endDate: r.end_date || '',
-    rent: Number(r.rent) || 0,
-    deposit: Number(r.deposit) || 0,
+    monthlyRent,
+    rent: monthlyRent,
+    securityDeposit,
+    deposit: securityDeposit,
+    dueDate: Number(r.due_date) || 1,
     status: (r.status || 'active') as LeaseStatus,
     terms: r.terms || '',
   };
 }
 
 function toDb(l: Lease) {
+  const rentVal = Math.max(0, Number(l.rent ?? l.monthlyRent) || 0);
+  const depVal = Math.max(0, Number(l.deposit ?? l.securityDeposit) || 0);
   return {
-    lease_id: l.leaseId,
+    lease_id: l.leaseId || l.number,
+    number: l.number || l.leaseId,
     property: l.property,
     property_id: l.propertyId,
     unit: l.unit,
@@ -71,8 +86,11 @@ function toDb(l: Lease) {
     tenant_id: l.tenantId,
     start_date: l.startDate,
     end_date: l.endDate,
-    rent: Math.max(0, Number(l.rent) || 0),
-    deposit: Math.max(0, Number(l.deposit) || 0),
+    monthly_rent: rentVal,
+    rent: rentVal,
+    security_deposit: depVal,
+    deposit: depVal,
+    due_date: l.dueDate || 1,
     status: l.status,
     terms: l.terms,
   };
@@ -114,7 +132,8 @@ export function LeasesPage() {
   useEffect(() => { fetchData(); }, [fetchData]);
 
   const filtered = useMemo(() => data.filter((l) => {
-    if (search && !l.tenant.toLowerCase().includes(search.toLowerCase()) && !l.property.toLowerCase().includes(search.toLowerCase()) && !l.leaseId.toLowerCase().includes(search.toLowerCase())) return false;
+    const lId = l.leaseId || l.number || '';
+    if (search && !l.tenant.toLowerCase().includes(search.toLowerCase()) && !l.property.toLowerCase().includes(search.toLowerCase()) && !lId.toLowerCase().includes(search.toLowerCase())) return false;
     if (filterStatus && l.status !== filterStatus) return false;
     return true;
   }), [data, search, filterStatus]);
@@ -252,7 +271,7 @@ export function LeasesPage() {
   const expiringCount = data.filter((l) => l.status === 'expiring').length;
 
   const columns: Column<Lease>[] = [
-    { key: 'leaseId', header: 'Lease ID', sortable: true, sortValue: (r) => r.leaseId, render: (r) => <span className="font-medium">{r.leaseId}</span> },
+    { key: 'leaseId', header: 'Lease ID', sortable: true, sortValue: (r) => r.leaseId || r.number || '', render: (r) => <span className="font-medium">{r.leaseId || r.number}</span> },
     {
       key: 'property', header: 'Property & Unit', sortable: true, sortValue: (r) => `${r.property} ${r.unit}`,
       render: (r) => (
@@ -272,8 +291,8 @@ export function LeasesPage() {
         </div>
       ),
     },
-    { key: 'rent', header: 'Rent', sortable: true, sortValue: (r) => r.rent, render: (r) => <span className="font-semibold">{formatCurrency(r.rent)}/mo</span> },
-    { key: 'deposit', header: 'Deposit', sortable: true, sortValue: (r) => r.deposit, render: (r) => formatCurrency(r.deposit) },
+    { key: 'rent', header: 'Rent', sortable: true, sortValue: (r) => r.rent ?? r.monthlyRent ?? 0, render: (r) => <span className="font-semibold">{formatCurrency(r.rent ?? r.monthlyRent ?? 0)}/mo</span> },
+    { key: 'deposit', header: 'Deposit', sortable: true, sortValue: (r) => r.deposit ?? r.securityDeposit ?? 0, render: (r) => formatCurrency(r.deposit ?? r.securityDeposit ?? 0) },
     {
       key: 'status', header: 'Status', sortable: true, sortValue: (r) => r.status,
       render: (r) => {
@@ -394,6 +413,7 @@ function LeaseFormModal({
 
   const [form, setForm] = useState<Lease>(lease ?? {
     id: '',
+    number: '',
     leaseId: '',
     property: initialProp?.name ?? '',
     propertyId: initialProp?.id ?? '',
@@ -403,8 +423,11 @@ function LeaseFormModal({
     tenantId: tenants[0]?.id ?? '',
     startDate: new Date().toISOString().slice(0, 10),
     endDate: new Date(Date.now() + 365 * 86400000).toISOString().slice(0, 10),
+    monthlyRent: 1200,
     rent: 1200,
+    securityDeposit: 1200,
     deposit: 1200,
+    dueDate: 1,
     status: 'active',
     terms: 'Standard 12-month residential lease agreement. No smoking. Pets subject to owner approval.',
   });
@@ -537,7 +560,7 @@ function LeaseFormModal({
 
 function LeaseViewModal({ lease, onClose, onEdit }: { lease: Lease; onClose: () => void; onEdit: () => void }) {
   return (
-    <Modal open onClose={onClose} size="lg" title={`Lease ${lease.leaseId}`} description={`${lease.property} — Unit ${lease.unit}`}>
+    <Modal open onClose={onClose} size="lg" title={`Lease ${lease.leaseId || lease.number}`} description={`${lease.property} — Unit ${lease.unit}`}>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <div>
@@ -547,8 +570,8 @@ function LeaseViewModal({ lease, onClose, onEdit }: { lease: Lease; onClose: () 
           <Badge tone={statusTone[lease.status]} dot className="text-sm px-3 py-1">{lease.status}</Badge>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div className="rounded-lg border border-border p-3"><p className="text-xs text-muted-foreground">Monthly Rent</p><p className="text-lg font-bold mt-1">{formatCurrency(lease.rent)}</p></div>
-          <div className="rounded-lg border border-border p-3"><p className="text-xs text-muted-foreground">Deposit</p><p className="text-lg font-bold mt-1">{formatCurrency(lease.deposit)}</p></div>
+          <div className="rounded-lg border border-border p-3"><p className="text-xs text-muted-foreground">Monthly Rent</p><p className="text-lg font-bold mt-1">{formatCurrency(lease.rent ?? lease.monthlyRent ?? 0)}</p></div>
+          <div className="rounded-lg border border-border p-3"><p className="text-xs text-muted-foreground">Deposit</p><p className="text-lg font-bold mt-1">{formatCurrency(lease.deposit ?? lease.securityDeposit ?? 0)}</p></div>
           <div className="rounded-lg border border-border p-3"><p className="text-xs text-muted-foreground">Start Date</p><p className="text-sm font-semibold mt-1">{formatDate(lease.startDate)}</p></div>
           <div className="rounded-lg border border-border p-3"><p className="text-xs text-muted-foreground">End Date</p><p className="text-sm font-semibold mt-1">{formatDate(lease.endDate)}</p></div>
         </div>

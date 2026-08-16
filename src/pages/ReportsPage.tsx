@@ -10,7 +10,7 @@ import { PageHeader } from '@/components/shared/PageHeader';
 import { AreaChart, BarChart, DonutChart } from '@/components/charts/Charts';
 import { useToast } from '@/lib/toast';
 import { supabase } from '@/lib/supabase';
-import type { Property, Tenant, Lease, Payment, MaintenanceTicket, Owner } from '@/lib/types';
+import type { Property, Tenant, Lease, Payment, MaintenanceTicket, Owner, PaymentMethod } from '@/lib/types';
 import { formatCurrency, cn, formatDate } from '@/lib/utils';
 
 interface DbProperty {
@@ -18,16 +18,21 @@ interface DbProperty {
   name: string;
   address?: string;
   city?: string;
-  state?: string;
-  zip_code?: string;
   type?: Property['type'];
+  units_count?: number;
   units?: number;
   rent?: number;
+  bedrooms?: number;
+  bathrooms?: number;
   status?: Property['status'];
+  occupancy?: number;
+  image?: string;
+  gallery?: string[];
   owner?: string;
   owner_id?: string;
-  year_built?: number;
   amenities?: string[];
+  rules?: string[];
+  description?: string;
 }
 
 interface DbTenant {
@@ -48,6 +53,7 @@ interface DbTenant {
 
 interface DbLease {
   id: string;
+  number?: string;
   lease_id?: string;
   property?: string;
   property_id?: string;
@@ -57,8 +63,11 @@ interface DbLease {
   tenant_id?: string;
   start_date?: string;
   end_date?: string;
+  monthly_rent?: number;
   rent?: number;
+  security_deposit?: number;
   deposit?: number;
+  due_date?: number;
   status?: Lease['status'];
 }
 
@@ -70,7 +79,7 @@ interface DbPayment {
   unit?: string;
   amount?: number;
   due_date?: string;
-  paid_date?: string;
+  paid_date?: string | null;
   method?: string;
   status?: Payment['status'];
 }
@@ -147,16 +156,20 @@ export function ReportsPage() {
       name: r.name,
       address: r.address || '',
       city: r.city || '',
-      state: r.state || '',
-      zipCode: r.zip_code || '',
-      type: r.type || 'Residential',
-      units: Number(r.units) || 1,
-      rent: Number(r.rent) || 0,
-      status: r.status || 'available',
+      type: r.type || 'Apartment',
       owner: r.owner || '',
       ownerId: r.owner_id,
-      yearBuilt: Number(r.year_built) || 2020,
+      rent: Number(r.rent) || 0,
+      bedrooms: Number(r.bedrooms) || 0,
+      bathrooms: Number(r.bathrooms) || 0,
+      status: r.status || 'available',
+      occupancy: Number(r.occupancy) || 0,
+      image: r.image || '',
+      gallery: r.gallery || [],
       amenities: r.amenities || [],
+      rules: r.rules || [],
+      description: r.description || '',
+      unitsCount: Number(r.units_count ?? r.units) || 1,
     })));
 
     setTenants(((tRes.data as DbTenant[]) ?? []).map((r) => ({
@@ -177,7 +190,7 @@ export function ReportsPage() {
 
     setLeases(((lRes.data as DbLease[]) ?? []).map((r) => ({
       id: r.id,
-      leaseId: r.lease_id || `LSE-${r.id.slice(0, 4)}`,
+      number: r.number || r.lease_id || `LSE-${r.id.slice(0, 4)}`,
       property: r.property || '',
       propertyId: r.property_id,
       unit: r.unit || '',
@@ -186,8 +199,9 @@ export function ReportsPage() {
       tenantId: r.tenant_id,
       startDate: r.start_date || '',
       endDate: r.end_date || '',
-      rent: Number(r.rent) || 0,
-      deposit: Number(r.deposit) || 0,
+      monthlyRent: Number(r.monthly_rent ?? r.rent) || 0,
+      securityDeposit: Number(r.security_deposit ?? r.deposit) || 0,
+      dueDate: Number(r.due_date) || 1,
       status: r.status || 'active',
     })));
 
@@ -199,8 +213,8 @@ export function ReportsPage() {
       unit: r.unit || '',
       amount: Number(r.amount) || 0,
       dueDate: r.due_date || '',
-      paidDate: r.paid_date || undefined,
-      method: r.method || 'Bank Transfer',
+      paidDate: r.paid_date ?? null,
+      method: (r.method || 'Bank Transfer') as PaymentMethod,
       status: r.status || 'pending',
     })));
 
@@ -429,7 +443,7 @@ export function ReportsPage() {
               {[
                 ['Vacant Properties', vacantCount],
                 ['Available for Rent', availableCount],
-                ['Total Units', properties.reduce((s, p) => s + p.units, 0)],
+                ['Total Units', properties.reduce((s, p) => s + p.unitsCount, 0)],
               ].map(([label, val]) => (
                 <div key={label as string} className="rounded-lg border border-border p-4">
                   <p className="text-sm text-muted-foreground">{label}</p>

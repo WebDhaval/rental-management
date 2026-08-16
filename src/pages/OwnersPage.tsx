@@ -21,6 +21,7 @@ interface DbOwner {
   phone: string;
   address: string;
   tax_number: string;
+  gstin?: string | null;
   bank_details: string;
   properties_owned: number;
 }
@@ -41,6 +42,7 @@ function fromDb(r: DbOwner, count: number): Owner {
     phone: r.phone || '',
     address: r.address || '',
     taxNumber: r.tax_number || '',
+    gstin: r.gstin || '',
     bankDetails: r.bank_details || '',
     propertiesOwned: count,
   };
@@ -54,6 +56,7 @@ function toDb(o: Owner) {
     phone: o.phone.trim(),
     address: o.address.trim(),
     tax_number: o.taxNumber.trim(),
+    gstin: o.gstin && o.gstin.trim() ? o.gstin.trim().toUpperCase() : null,
     bank_details: o.bankDetails.trim(),
     properties_owned: o.propertiesOwned,
   };
@@ -224,7 +227,20 @@ export function OwnersPage() {
 }
 
 function OwnerFormModal({ owner, onSave, onClose, saving }: { owner: Owner | null; onSave: (o: Owner) => void; onClose: () => void; saving: boolean }) {
-  const [form, setForm] = useState<Owner>(owner ?? { id: '', name: '', company: '', email: '', phone: '', address: '', taxNumber: '', bankDetails: '', propertiesOwned: 0 });
+  const [form, setForm] = useState<Owner>(
+    owner ?? {
+      id: '',
+      name: '',
+      company: '',
+      email: '',
+      phone: '',
+      address: '',
+      taxNumber: '',
+      gstin: '',
+      bankDetails: '',
+      propertiesOwned: 0,
+    }
+  );
   const update = (p: Partial<Owner>) => setForm((f) => ({ ...f, ...p }));
   return (
     <Modal
@@ -254,6 +270,9 @@ function OwnerFormModal({ owner, onSave, onClose, saving }: { owner: Owner | nul
           <FieldGroup label="Address"><Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Street address, City, PIN Code" /></FieldGroup>
           <FieldGroup label="PAN"><Input value={form.taxNumber} onChange={(e) => update({ taxNumber: e.target.value.toUpperCase() })} placeholder="e.g. ABCDE1234F" /></FieldGroup>
         </div>
+        <FieldGroup label="GSTIN (Optional for businesses)">
+          <Input value={form.gstin || ''} onChange={(e) => update({ gstin: e.target.value.toUpperCase() })} placeholder="e.g. 29ABCDE1234F1Z5" />
+        </FieldGroup>
         <FieldGroup label="Bank Details"><Textarea value={form.bankDetails} onChange={(e) => update({ bankDetails: e.target.value })} placeholder="Bank Name, Account Holder Name, Account Number, IFSC Code (e.g. SBIN0001234)..." /></FieldGroup>
       </div>
     </Modal>
@@ -291,6 +310,9 @@ function OwnerViewModal({ owner, onClose, onEdit }: { owner: Owner; onClose: () 
           <div className="flex items-center gap-2 text-sm"><Phone className="h-4 w-4 text-muted-foreground" /> {owner.phone || '—'}</div>
           <div className="flex items-center gap-2 text-sm"><MapPin className="h-4 w-4 text-muted-foreground" /> {owner.address || '—'}</div>
           <div className="flex items-center gap-2 text-sm"><Building className="h-4 w-4 text-muted-foreground" /> PAN: {owner.taxNumber || '—'}</div>
+          {owner.gstin && (
+            <div className="flex items-center gap-2 text-sm col-span-full"><Building className="h-4 w-4 text-muted-foreground" /> GSTIN: {owner.gstin}</div>
+          )}
         </div>
         {owner.bankDetails && (
           <div>

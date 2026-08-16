@@ -484,8 +484,7 @@ export function PropertiesPage() {
             columns={columns}
             data={filtered}
             selectable
-            selected={selected}
-            onSelect={setSelected}
+            onSelectionChange={setSelected}
             rowKey={(r) => r.id}
             onRowClick={(r) => setViewing(r)}
             emptyIcon={<Building2 className="h-10 w-10 opacity-40" />}

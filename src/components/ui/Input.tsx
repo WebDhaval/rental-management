@@ -47,10 +47,13 @@ export function Label({ className, children, ...props }: { className?: string; c
   );
 }
 
-export function FieldGroup({ label, children, hint }: { label: string; children: ReactNode; hint?: string }) {
+export function FieldGroup({ label, children, hint, required }: { label: string; children: ReactNode; hint?: string; required?: boolean }) {
   return (
     <div>
-      <Label>{label}</Label>
+      <Label>
+        {label}
+        {required && <span className="text-danger ml-0.5">*</span>}
+      </Label>
       {children}
       {hint && <p className="mt-1 text-xs text-muted-foreground">{hint}</p>}
     </div>

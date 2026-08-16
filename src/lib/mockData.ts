@@ -106,8 +106,8 @@ export const tenants: Tenant[] = [
 ];
 
 export const owners: Owner[] = [
-  { id: 'o1', name: 'Robert Chen', company: 'Chen Properties LLC', email: 'robert@chenproperties.com', phone: '+91 98765 11111', address: '100 Owner Lane, LA, CA', taxNumber: 'AAACR1234F', bankDetails: 'HDFC Bank - HDFC0001234 / A/C ****1234', propertiesOwned: 3 },
-  { id: 'o2', name: 'Emily Rodriguez', company: 'Rodriguez Holdings', email: 'emily@rodriguezholdings.com', phone: '+91 98765 22222', address: '200 Owner Ave, Austin, TX', taxNumber: 'BBBER5678G', bankDetails: 'ICICI Bank - ICIC0005678 / A/C ****5678', propertiesOwned: 3 },
+  { id: 'o1', name: 'Robert Chen', company: 'Chen Properties LLC', email: 'robert@chenproperties.com', phone: '+91 98765 11111', address: '100 Owner Lane, LA, CA', taxNumber: 'AAACR1234F', gstin: '29AAACR1234F1Z5', bankDetails: 'HDFC Bank - HDFC0001234 / A/C ****1234', propertiesOwned: 3 },
+  { id: 'o2', name: 'Emily Rodriguez', company: 'Rodriguez Holdings', email: 'emily@rodriguezholdings.com', phone: '+91 98765 22222', address: '200 Owner Ave, Austin, TX', taxNumber: 'BBBER5678G', gstin: '29BBBER5678G1Z8', bankDetails: 'ICICI Bank - ICIC0005678 / A/C ****5678', propertiesOwned: 3 },
   { id: 'o3', name: 'Michael Thompson', company: 'Thompson Estates', email: 'michael@thompsonestates.com', phone: '+91 98765 33333', address: '300 Owner Blvd, Miami, FL', taxNumber: 'CCCMT9012H', bankDetails: 'State Bank of India - SBIN0009012 / A/C ****9012', propertiesOwned: 2 },
 ];
 
@@ -129,7 +129,7 @@ export const payments: Payment[] = [
   { id: 'pay4', invoice: 'INV-2026-004', tenantId: 't4', propertyId: 'p7', unitId: 'u9', tenant: 'James Wilson', property: 'Harbor View Towers', unit: 'PH-1', dueDate: '2026-08-01', paidDate: '2026-08-01', amount: 4200, method: 'Bank Transfer', status: 'paid' },
   { id: 'pay5', invoice: 'INV-2026-005', tenantId: 't5', propertyId: 'p6', unitId: 'u8', tenant: 'Patricia Brown', property: 'Pinecrest Studios', unit: 'S-02', dueDate: '2026-07-03', paidDate: null, amount: 1500, method: 'Cash', status: 'overdue' },
   { id: 'pay6', invoice: 'INV-2026-006', tenantId: 't6', propertyId: 'p1', unitId: 'u1', tenant: 'Thomas Lee', property: 'Sunset Gardens', unit: '101', dueDate: '2026-08-15', paidDate: '2026-08-10', amount: 1800, method: 'UPI', status: 'paid' },
-  { id: 'pay7', invoice: 'INV-2026-007', tenantId: 't7', propertyId: 'p4', unitId: 'u6', tenant: 'Linda Martinez', property: 'Downtown Lofts', unit: 'A-2', dueDate: '2026-08-01', paidDate: '2026-08-03', amount: 1800, method: 'Credit Card', status: 'partial' },
+  { id: 'pay7', invoice: 'INV-2026-007', tenantId: 't7', propertyId: 'p4', unitId: 'u6', tenant: 'Linda Martinez', property: 'Downtown Lofts', unit: 'A-2', dueDate: '2026-08-01', paidDate: '2026-08-03', amount: 1800, method: 'Card', status: 'partial' },
   { id: 'pay8', invoice: 'INV-2026-008', tenantId: 't8', propertyId: 'p7', unitId: 'u10', tenant: 'Christopher Taylor', property: 'Harbor View Towers', unit: 'PH-2', dueDate: '2026-08-01', paidDate: '2026-08-01', amount: 4200, method: 'Bank Transfer', status: 'paid' },
   { id: 'pay9', invoice: 'INV-2026-009', tenantId: 't1', propertyId: 'p1', unitId: 'u3', tenant: 'Jennifer Walsh', property: 'Sunset Gardens', unit: '201', dueDate: '2026-07-01', paidDate: '2026-07-01', amount: 2400, method: 'Bank Transfer', status: 'paid' },
   { id: 'pay10', invoice: 'INV-2026-010', tenantId: 't2', propertyId: 'p4', unitId: 'u5', tenant: 'David Kim', property: 'Downtown Lofts', unit: 'A-1', dueDate: '2026-07-01', paidDate: '2026-07-02', amount: 3800, method: 'Card', status: 'paid' },

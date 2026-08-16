@@ -74,6 +74,7 @@ export type LeaseStatus = 'active' | 'expiring' | 'expired' | 'terminated' | 'pe
 export interface Lease {
   id: ID;
   number: string;
+  leaseId?: string;
   tenantId?: ID;
   propertyId?: ID;
   unitId?: ID;
@@ -83,13 +84,16 @@ export interface Lease {
   startDate: string;
   endDate: string;
   monthlyRent: number;
+  rent?: number;
   securityDeposit: number;
+  deposit?: number;
   dueDate: number; // day of month
   status: LeaseStatus;
+  terms?: string;
 }
 
 export type PaymentStatus = 'paid' | 'pending' | 'overdue' | 'partial';
-export type PaymentMethod = 'UPI' | 'Bank Transfer' | 'Cash' | 'Card' | 'Credit Card' | 'Check' | 'PayPal';
+export type PaymentMethod = 'UPI' | 'Bank Transfer' | 'Cash' | 'Card';
 
 export interface Payment {
   id: ID;
@@ -125,6 +129,7 @@ export interface MaintenanceTicket {
   assignedStaff: string;
   status: MaintenanceStatus;
   createdAt: string;
+  resolvedAt?: string;
   title: string;
   description: string;
 }
@@ -150,8 +155,10 @@ export interface DocItem {
   uploadedAt: string;
   uploadedBy: string;
   propertyId?: ID;
+  property?: string;
   tenantId?: ID;
   ownerId?: ID;
+  url?: string;
 }
 
 export interface CalendarEvent {
@@ -169,6 +176,7 @@ export interface AppNotification {
   type: 'rent_due' | 'overdue_rent' | 'lease_expiring' | 'maintenance_assigned' | 'maintenance_completed' | 'new_tenant' | 'vacant_property';
   read: boolean;
   createdAt: string;
+  link?: string;
 }
 
 export interface Activity {
@@ -178,4 +186,8 @@ export interface Activity {
   target: string;
   time: string;
   type: 'create' | 'update' | 'delete' | 'payment' | 'lease' | 'maintenance';
+  title?: string;
+  description?: string;
+  user?: string;
+  createdAt?: string;
 }
