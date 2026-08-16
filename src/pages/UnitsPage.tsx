@@ -90,7 +90,13 @@ export function UnitsPage() {
 
   useEffect(() => { fetchData(); }, [fetchData]);
 
-  const propName = (id: string) => properties.find((p) => p.id === id)?.name ?? '—';
+  const propMap = useMemo(() => {
+    const map = new Map<string, string>();
+    properties.forEach((p) => map.set(p.id, p.name));
+    return map;
+  }, [properties]);
+
+  const propName = (id: string) => propMap.get(id) || '—';
 
   const filtered = useMemo(() => data.filter((u) => {
     if (search && !u.unitNumber.toLowerCase().includes(search.toLowerCase())) return false;
@@ -104,8 +110,9 @@ export function UnitsPage() {
       toast.error('Validation Error', 'Unit number is required.');
       return;
     }
-    if (!u.propertyId) {
-      toast.error('Validation Error', 'Please select a property for this unit.');
+    const cleanPropId = u.propertyId?.trim();
+    if (!cleanPropId || !properties.some((p) => p.id === cleanPropId)) {
+      toast.error('Validation Error', 'Please select a valid property for this unit.');
       return;
     }
 
@@ -214,21 +221,30 @@ export function UnitsPage() {
 }
 
 function UnitFormModal({ unit, properties, onSave, onClose, saving }: { unit: Unit | null; properties: PropOpt[]; onSave: (u: Unit) => void; onClose: () => void; saving: boolean }) {
-  const [form, setForm] = useState<Unit>(unit ?? {
-    id: '',
-    unitNumber: '',
-    floor: 1,
-    size: 500,
-    bedrooms: 1,
-    bathrooms: 1,
-    rent: 1000,
-    deposit: 1000,
-    status: 'available',
-    availableDate: new Date().toISOString().slice(0, 10),
-    propertyId: properties[0]?.id ?? '',
+  const [form, setForm] = useState<Unit>(() => {
+    if (unit) {
+      return {
+        ...unit,
+        propertyId: unit.propertyId || properties[0]?.id || '',
+      };
+    }
+    return {
+      id: '',
+      unitNumber: '',
+      floor: 1,
+      size: 500,
+      bedrooms: 1,
+      bathrooms: 1,
+      rent: 1000,
+      deposit: 1000,
+      status: 'available',
+      availableDate: new Date().toISOString().slice(0, 10),
+      propertyId: properties.length === 1 ? properties[0].id : (properties[0]?.id ?? ''),
+    };
   });
 
   const update = (p: Partial<Unit>) => setForm((f) => ({ ...f, ...p }));
+  const isValid = Boolean(form.unitNumber.trim() && form.propertyId && properties.some((p) => p.id === form.propertyId));
 
   return (
     <Modal
@@ -239,8 +255,8 @@ function UnitFormModal({ unit, properties, onSave, onClose, saving }: { unit: Un
       footer={
         <>
           <Button variant="outline" onClick={onClose}>Cancel</Button>
-          <Button onClick={() => onSave(form)} disabled={!form.unitNumber.trim() || !form.propertyId || saving}>
-            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : unit ? 'Save' : 'Add Unit'}
+          <Button onClick={() => onSave(form)} disabled={!isValid || saving}>
+            {saving ? <Loader2 className="h-4 w-4 animate-spin" /> : unit ? 'Save Changes' : 'Add Unit'}
           </Button>
         </>
       }
@@ -250,7 +266,7 @@ function UnitFormModal({ unit, properties, onSave, onClose, saving }: { unit: Un
           <FieldGroup label="Unit Number" required>
             <Input value={form.unitNumber} onChange={(e) => update({ unitNumber: e.target.value })} placeholder="e.g. 101" />
           </FieldGroup>
-          <FieldGroup label="Property" required>
+          <FieldGroup label="Property" required hint={properties.length === 0 ? 'No properties found in database' : undefined}>
             <Select value={form.propertyId} onChange={(e) => update({ propertyId: e.target.value })}>
               <option value="">Select Property</option>
               {properties.map((p) => <option key={p.id} value={p.id}>{p.name}</option>)}

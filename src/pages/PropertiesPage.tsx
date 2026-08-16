@@ -229,10 +229,19 @@ export function PropertiesPage() {
     const unitCount = unitsCheck.data?.length || 0;
     const leaseCount = leasesCheck.data?.length || 0;
 
-    if (unitCount > 0 || leaseCount > 0) {
+    if (unitCount > 0) {
       toast.error(
         'Cannot delete property',
-        `This property has ${unitCount} unit(s) and ${leaseCount} lease(s) linked to it. Please remove them first.`
+        `This property has ${unitCount} unit(s) linked to it. Please remove or reassign the units first.`
+      );
+      setDeleteTarget(null);
+      return;
+    }
+
+    if (leaseCount > 0) {
+      toast.error(
+        'Cannot delete property',
+        `This property has ${leaseCount} lease(s) linked to it. Please remove or terminate the leases first.`
       );
       setDeleteTarget(null);
       return;
@@ -271,6 +280,27 @@ export function PropertiesPage() {
 
   const handleBulkDelete = async () => {
     const ids = selected.map((s) => s.id);
+    const [unitsCheck, leasesCheck] = await Promise.all([
+      supabase.from('units').select('id, property_id').in('property_id', ids),
+      supabase.from('leases').select('id, property_id').in('property_id', ids),
+    ]);
+    const unitCount = unitsCheck.data?.length || 0;
+    const leaseCount = leasesCheck.data?.length || 0;
+    if (unitCount > 0) {
+      toast.error(
+        'Cannot delete properties',
+        `Selected properties have ${unitCount} unit(s) linked to them. Please remove or reassign the units first.`
+      );
+      return;
+    }
+    if (leaseCount > 0) {
+      toast.error(
+        'Cannot delete properties',
+        `Selected properties have ${leaseCount} lease(s) linked to them. Please remove or terminate the leases first.`
+      );
+      return;
+    }
+
     const { error } = await supabase.from('properties').delete().in('id', ids);
     if (error) {
       toast.error('Failed to delete properties', error.message);
