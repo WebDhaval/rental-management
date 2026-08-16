@@ -138,8 +138,78 @@ export function LeasesPage() {
     }
 
     setSaving(true);
+
+    // Resolve property_id and unit_id
+    const propId = l.propertyId || properties.find((p) => p.name === l.property)?.id || '';
+    const unitObj = units.find((u) => u.id === l.unitId) ||
+      units.find((u) => (propId ? u.property_id === propId : true) && (u.unit_number === l.unit || `Unit ${u.unit_number}` === l.unit));
+
+    const resolvedUnitId = l.unitId || unitObj?.id || '';
+    const resolvedPropId = propId || unitObj?.property_id || '';
+    const unitNumber = l.unit || unitObj?.unit_number || '';
+
+    // Verify selected unit belongs to the selected property
+    if (unitObj && resolvedPropId && unitObj.property_id && unitObj.property_id !== resolvedPropId) {
+      toast.error('Validation Error', `Unit ${unitObj.unit_number} does not belong to the selected property.`);
+      setSaving(false);
+      return;
+    }
+
+    // Availability Check: Check if unit already has an overlapping active or expiring lease
+    const blockingStatuses = ['active', 'expiring'];
+    let query = supabase
+      .from('leases')
+      .select('id, lease_id, unit, unit_id, property_id, start_date, end_date, status');
+
+    if (resolvedUnitId) {
+      query = query.eq('unit_id', resolvedUnitId);
+    } else if (resolvedPropId && unitNumber) {
+      query = query.eq('property_id', resolvedPropId).eq('unit', unitNumber);
+    }
+
+    const { data: existingLeases, error: leaseCheckErr } = await query;
+    if (leaseCheckErr) {
+      toast.error('Availability Check Error', leaseCheckErr.message);
+      setSaving(false);
+      return;
+    }
+
+    const hasOverlap = (existingLeases || []).some((existing: DbLease) => {
+      // Ignore current lease itself when editing (id != currentLeaseId)
+      if (editing && (existing.id === l.id || (l.leaseId && existing.lease_id === l.leaseId))) {
+        return false;
+      }
+
+      // Treat active and expiring leases as blocking. Historical expired or terminated do not block.
+      const status = (existing.status || '').toLowerCase();
+      if (!blockingStatuses.includes(status)) {
+        return false;
+      }
+
+      const existStart = existing.start_date;
+      const existEnd = existing.end_date;
+      if (!existStart || !existEnd) return false;
+
+      // Overlap condition:
+      // existing.start_date <= new.end_date && existing.end_date >= new.start_date
+      return existStart <= l.endDate && existEnd >= l.startDate;
+    });
+
+    if (hasOverlap) {
+      const unitLabel = unitNumber.startsWith('Unit ') ? unitNumber : `Unit ${unitNumber}`;
+      toast.error(
+        'Unit unavailable',
+        `${unitLabel} is already leased during this period. Please choose another unit or lease period.`
+      );
+      setSaving(false);
+      return;
+    }
+
     const leaseData = {
       ...l,
+      propertyId: resolvedPropId,
+      unitId: resolvedUnitId,
+      unit: unitNumber,
       leaseId: l.leaseId || `LSE-${Math.floor(1000 + Math.random() * 9000)}`,
     };
 
