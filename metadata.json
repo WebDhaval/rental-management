@@ -1,0 +1,6 @@
+{
+  "name": "EstateHub",
+  "description": "Comprehensive rental and property management platform for tracking units, tenants, leases, payments, maintenance, and reports.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
