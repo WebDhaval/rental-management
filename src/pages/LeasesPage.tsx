@@ -519,10 +519,10 @@ function LeaseFormModal({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FieldGroup label="Monthly Rent ($)" required>
+          <FieldGroup label="Monthly Rent (₹)" required>
             <Input type="number" min={0} value={form.rent} onChange={(e) => update({ rent: Number(e.target.value) })} />
           </FieldGroup>
-          <FieldGroup label="Security Deposit ($)">
+          <FieldGroup label="Security Deposit (₹)">
             <Input type="number" min={0} value={form.deposit} onChange={(e) => update({ deposit: Number(e.target.value) })} />
           </FieldGroup>
         </div>

@@ -77,31 +77,31 @@ export function SettingsPage() {
                   <FieldGroup label="Contact Email"><Input type="email" defaultValue="contact@estatehub.com" /></FieldGroup>
                 </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FieldGroup label="Phone"><Input defaultValue="(555) 100-2000" /></FieldGroup>
+                  <FieldGroup label="Phone"><Input defaultValue="+91 98765 43210" /></FieldGroup>
                   <FieldGroup label="Website"><Input defaultValue="https://estatehub.com" /></FieldGroup>
                 </div>
-                <FieldGroup label="Address"><Textarea defaultValue="100 Business Center Drive, Suite 200, Los Angeles, CA 90001" /></FieldGroup>
+                <FieldGroup label="Address"><Textarea defaultValue="Plot 42, Tech Park Road, Whitefield, Bengaluru, Karnataka 560066" /></FieldGroup>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                   <FieldGroup label="Currency">
-                    <Select defaultValue="USD">
-                      <option value="USD">USD - US Dollar</option>
-                      <option value="EUR">EUR - Euro</option>
-                      <option value="GBP">GBP - British Pound</option>
-                      <option value="CAD">CAD - Canadian Dollar</option>
+                    <Select defaultValue="INR">
+                      <option value="INR">INR - Indian Rupee (₹)</option>
+                      <option value="USD">USD - US Dollar ($)</option>
+                      <option value="EUR">EUR - Euro (€)</option>
+                      <option value="GBP">GBP - British Pound (£)</option>
                     </Select>
                   </FieldGroup>
                   <FieldGroup label="Timezone">
-                    <Select defaultValue="PST">
+                    <Select defaultValue="IST">
+                      <option value="IST">IST (UTC+5:30) - Asia/Kolkata</option>
+                      <option value="UTC">UTC</option>
                       <option value="PST">PST (UTC-8)</option>
                       <option value="EST">EST (UTC-5)</option>
-                      <option value="CST">CST (UTC-6)</option>
-                      <option value="UTC">UTC</option>
                     </Select>
                   </FieldGroup>
                   <FieldGroup label="Date Format">
-                    <Select defaultValue="MM/DD/YYYY">
-                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                    <Select defaultValue="DD/MM/YYYY">
                       <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                      <option value="MM/DD/YYYY">MM/DD/YYYY</option>
                       <option value="YYYY-MM-DD">YYYY-MM-DD</option>
                     </Select>
                   </FieldGroup>
@@ -116,16 +116,16 @@ export function SettingsPage() {
               <CardHeader><CardTitle>Financial Settings</CardTitle></CardHeader>
               <CardContent className="space-y-4">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <FieldGroup label="Tax Rate (%)" hint="Applied to rent amounts">
+                  <FieldGroup label="Tax / GST Rate (%)" hint="Applied to rent or invoice amounts">
                     <div className="relative">
                       <Percent className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input type="number" className="pl-10" defaultValue="8.5" />
+                      <Input type="number" className="pl-10" defaultValue="18" />
                     </div>
                   </FieldGroup>
-                  <FieldGroup label="Late Fee ($)" hint="Charged after due date">
+                  <FieldGroup label="Late Fee (₹)" hint="Charged after due date">
                     <div className="relative">
-                      <DollarSign className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-                      <Input type="number" className="pl-10" defaultValue="50" />
+                      <span className="absolute left-3 top-1/2 -translate-y-1/2 text-sm font-semibold text-muted-foreground">₹</span>
+                      <Input type="number" className="pl-8" defaultValue="500" />
                     </div>
                   </FieldGroup>
                 </div>
@@ -142,14 +142,14 @@ export function SettingsPage() {
             <Card>
               <CardHeader><CardTitle>Payment Methods</CardTitle></CardHeader>
               <CardContent className="space-y-3">
-                {['Bank Transfer', 'Credit Card', 'Cash', 'Check', 'PayPal'].map((m) => (
+                {['UPI', 'Bank Transfer (NEFT / IMPS / RTGS)', 'Credit / Debit Card', 'Cash'].map((m) => (
                   <div key={m} className="flex items-center justify-between rounded-lg border border-border p-3">
                     <div className="flex items-center gap-3">
                       <CreditCard className="h-5 w-5 text-muted-foreground" />
                       <span className="text-sm font-medium">{m}</span>
                     </div>
                     <label className="relative inline-flex items-center cursor-pointer">
-                      <input type="checkbox" defaultChecked={m !== 'Check'} className="sr-only peer" />
+                      <input type="checkbox" defaultChecked className="sr-only peer" />
                       <div className="w-11 h-6 bg-secondary rounded-full peer peer-checked:bg-primary transition-colors after:content-[''] after:absolute after:top-0.5 after:left-0.5 after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-transform peer-checked:after:translate-x-5" />
                     </label>
                   </div>

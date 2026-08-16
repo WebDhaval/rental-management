@@ -175,7 +175,7 @@ export function OwnersPage() {
     },
     { key: 'email', header: 'Email', render: (r) => <span className="text-muted-foreground">{r.email}</span> },
     { key: 'phone', header: 'Phone', render: (r) => <span className="text-muted-foreground">{r.phone || '—'}</span> },
-    { key: 'taxNumber', header: 'Tax #', render: (r) => <span className="text-muted-foreground">{r.taxNumber || '—'}</span> },
+    { key: 'taxNumber', header: 'PAN', render: (r) => <span className="text-muted-foreground">{r.taxNumber || '—'}</span> },
     { key: 'propertiesOwned', header: 'Properties', sortable: true, sortValue: (r) => r.propertiesOwned, render: (r) => <Badge tone="primary">{r.propertiesOwned} owned</Badge> },
     {
       key: 'actions', header: '', headerClassName: 'text-right',
@@ -248,13 +248,13 @@ function OwnerFormModal({ owner, onSave, onClose, saving }: { owner: Owner | nul
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FieldGroup label="Email" required><Input type="email" value={form.email} onChange={(e) => update({ email: e.target.value })} placeholder="owner@domain.com" /></FieldGroup>
-          <FieldGroup label="Phone"><Input value={form.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="(555) 000-0000" /></FieldGroup>
+          <FieldGroup label="Phone"><Input value={form.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+91 98765 43210" /></FieldGroup>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FieldGroup label="Address"><Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Business or mailing address" /></FieldGroup>
-          <FieldGroup label="Tax ID / SSN"><Input value={form.taxNumber} onChange={(e) => update({ taxNumber: e.target.value })} placeholder="Tax ID" /></FieldGroup>
+          <FieldGroup label="Address"><Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Street address, City, PIN Code" /></FieldGroup>
+          <FieldGroup label="PAN"><Input value={form.taxNumber} onChange={(e) => update({ taxNumber: e.target.value.toUpperCase() })} placeholder="e.g. ABCDE1234F" /></FieldGroup>
         </div>
-        <FieldGroup label="Bank Details"><Textarea value={form.bankDetails} onChange={(e) => update({ bankDetails: e.target.value })} placeholder="Bank name, routing & account number..." /></FieldGroup>
+        <FieldGroup label="Bank Details"><Textarea value={form.bankDetails} onChange={(e) => update({ bankDetails: e.target.value })} placeholder="Bank Name, Account Holder Name, Account Number, IFSC Code (e.g. SBIN0001234)..." /></FieldGroup>
       </div>
     </Modal>
   );
@@ -290,7 +290,7 @@ function OwnerViewModal({ owner, onClose, onEdit }: { owner: Owner; onClose: () 
           <div className="flex items-center gap-2 text-sm"><Mail className="h-4 w-4 text-muted-foreground" /> {owner.email}</div>
           <div className="flex items-center gap-2 text-sm"><Phone className="h-4 w-4 text-muted-foreground" /> {owner.phone || '—'}</div>
           <div className="flex items-center gap-2 text-sm"><MapPin className="h-4 w-4 text-muted-foreground" /> {owner.address || '—'}</div>
-          <div className="flex items-center gap-2 text-sm"><Building className="h-4 w-4 text-muted-foreground" /> Tax #: {owner.taxNumber || '—'}</div>
+          <div className="flex items-center gap-2 text-sm"><Building className="h-4 w-4 text-muted-foreground" /> PAN: {owner.taxNumber || '—'}</div>
         </div>
         {owner.bankDetails && (
           <div>

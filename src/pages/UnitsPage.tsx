@@ -295,10 +295,10 @@ function UnitFormModal({ unit, properties, onSave, onClose, saving }: { unit: Un
           </FieldGroup>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <FieldGroup label="Rent ($)">
+          <FieldGroup label="Rent (₹)">
             <Input type="number" min={0} value={form.rent} onChange={(e) => update({ rent: Number(e.target.value) })} />
           </FieldGroup>
-          <FieldGroup label="Deposit ($)">
+          <FieldGroup label="Deposit (₹)">
             <Input type="number" min={0} value={form.deposit} onChange={(e) => update({ deposit: Number(e.target.value) })} />
           </FieldGroup>
           <FieldGroup label="Available Date">

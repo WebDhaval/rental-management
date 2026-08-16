@@ -4,28 +4,32 @@ export function cn(...classes: (string | false | null | undefined)[]): string {
 
 export function formatCurrency(value: number, compact = false): string {
   if (compact && Math.abs(value) >= 1000) {
-    return new Intl.NumberFormat('en-US', {
+    return new Intl.NumberFormat('en-IN', {
       style: 'currency',
-      currency: 'USD',
+      currency: 'INR',
       notation: 'compact',
       maximumFractionDigits: 1,
     }).format(value);
   }
-  return new Intl.NumberFormat('en-US', {
+  return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'USD',
+    currency: 'INR',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(value);
 }
 
 export function formatNumber(value: number): string {
-  return new Intl.NumberFormat('en-US').format(value);
+  return new Intl.NumberFormat('en-IN').format(value);
 }
 
 export function formatDate(date: string | Date, opts?: Intl.DateTimeFormatOptions): string {
   const d = typeof date === 'string' ? new Date(date) : date;
-  return d.toLocaleDateString('en-US', opts ?? { month: 'short', day: 'numeric', year: 'numeric' });
+  if (isNaN(d.getTime())) return '';
+  return d.toLocaleDateString(
+    'en-IN',
+    opts ?? { day: '2-digit', month: '2-digit', year: 'numeric', timeZone: 'Asia/Kolkata' }
+  );
 }
 
 export function timeAgo(date: string | Date): string {

@@ -61,7 +61,7 @@ export function LoginPage() {
             </div>
             <div className="h-10 w-px bg-white/20" />
             <div>
-              <p className="text-3xl font-bold">$25K</p>
+              <p className="text-3xl font-bold">₹2.5L</p>
               <p className="text-xs text-white/60">Monthly</p>
             </div>
           </div>

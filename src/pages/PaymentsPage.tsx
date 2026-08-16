@@ -21,7 +21,7 @@ const statusTone: Record<PaymentStatus, 'success' | 'warning' | 'danger' | 'info
   partial: 'info',
 };
 
-const methods: PaymentMethod[] = ['Bank Transfer', 'Credit Card', 'Cash', 'Check', 'Online Portal'];
+const methods: PaymentMethod[] = ['UPI', 'Bank Transfer', 'Cash', 'Card', 'Credit Card'];
 
 interface DbPayment {
   id: string;
@@ -495,7 +495,7 @@ function PaymentFormModal({
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <FieldGroup label="Amount ($)" required>
+          <FieldGroup label="Amount (₹)" required>
             <Input type="number" min={1} value={form.amount} onChange={(e) => update({ amount: Number(e.target.value) })} />
           </FieldGroup>
           <FieldGroup label="Payment Method">

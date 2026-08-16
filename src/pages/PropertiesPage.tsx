@@ -24,7 +24,10 @@ const statusTone: Record<PropertyStatus, 'success' | 'primary' | 'warning' | 'da
 };
 
 const propertyTypes: PropertyType[] = ['Apartment', 'House', 'Villa', 'Condo', 'Townhouse', 'Studio', 'Commercial'];
-const cities = ['Los Angeles, CA', 'Austin, TX', 'Miami, FL', 'New York, NY', 'Portland, OR', 'Seattle, WA', 'San Francisco, CA', 'Chicago, IL'];
+const cities = [
+  'Bengaluru, KA', 'Mumbai, MH', 'Delhi NCR', 'Hyderabad, TS', 'Pune, MH', 'Chennai, TN', 'Kolkata, WB', 'Ahmedabad, GJ',
+  'Los Angeles, CA', 'Austin, TX', 'Miami, FL', 'New York, NY', 'Portland, OR', 'Seattle, WA', 'San Francisco, CA', 'Chicago, IL',
+];
 
 interface DbProperty {
   id: string;
@@ -652,7 +655,7 @@ function PropertyFormModal({
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FieldGroup label="Address" required>
-            <Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Street address" />
+            <Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Street address, Locality, PIN Code" />
           </FieldGroup>
           <FieldGroup label="City">
             <Select value={form.city} onChange={(e) => update({ city: e.target.value })}>
@@ -662,7 +665,7 @@ function PropertyFormModal({
           </FieldGroup>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          <FieldGroup label="Rent ($/mo)">
+          <FieldGroup label="Rent (₹/mo)">
             <Input type="number" min={0} value={form.rent} onChange={(e) => update({ rent: Number(e.target.value) })} />
           </FieldGroup>
           <FieldGroup label="Bedrooms">

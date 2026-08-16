@@ -95,20 +95,20 @@ export const units: Unit[] = [
 ];
 
 export const tenants: Tenant[] = [
-  { id: 't1', name: 'Jennifer Walsh', email: 'jennifer.walsh@email.com', phone: '(555) 123-4567', emergencyContact: 'Mark Walsh (555) 987-6543', address: '123 Sunset Blvd, Apt 201, Los Angeles, CA', nationalId: 'XXX-XX-1234', occupation: 'Software Engineer', company: 'Tech Corp', notes: 'Excellent tenant, always pays on time.', photo: '', registeredAt: '2024-11-01', status: 'active' },
-  { id: 't2', name: 'David Kim', email: 'david.kim@email.com', phone: '(555) 234-5678', emergencyContact: 'Susan Kim (555) 876-5432', address: '321 Main Avenue, Apt A-1, New York, NY', nationalId: 'XXX-XX-2345', occupation: 'Designer', company: 'Creative Studio', notes: 'Prefers email communication.', photo: '', registeredAt: '2025-03-01', status: 'active' },
-  { id: 't3', name: 'Maria Garcia', email: 'maria.garcia@email.com', phone: '(555) 345-6789', emergencyContact: 'Carlos Garcia (555) 765-4321', address: '789 Oakwood Drive, Miami, FL', nationalId: 'XXX-XX-3456', occupation: 'Doctor', company: 'City Hospital', notes: 'Renewing lease next month.', photo: '', registeredAt: '2024-08-01', status: 'active' },
-  { id: 't4', name: 'James Wilson', email: 'james.wilson@email.com', phone: '(555) 456-7890', emergencyContact: 'Linda Wilson (555) 654-3210', address: '147 Harbor Way, PH-1, San Francisco, CA', nationalId: 'XXX-XX-4567', occupation: 'Product Manager', company: 'Innovate Inc', notes: 'Has a service animal.', photo: '', registeredAt: '2024-08-01', status: 'active' },
-  { id: 't5', name: 'Patricia Brown', email: 'patricia.brown@email.com', phone: '(555) 567-8901', emergencyContact: 'Robert Brown (555) 543-2109', address: '987 Pine Lane, Studio S-02, Seattle, WA', nationalId: 'XXX-XX-5678', occupation: 'Teacher', company: 'Lincoln High School', notes: 'Lease ending soon.', photo: '', registeredAt: '2025-06-01', status: 'active' },
-  { id: 't6', name: 'Thomas Lee', email: 'thomas.lee@email.com', phone: '(555) 678-9012', emergencyContact: 'Nancy Lee (555) 432-1098', address: '123 Sunset Blvd, Apt 101, Los Angeles, CA', nationalId: 'XXX-XX-6789', occupation: 'Accountant', company: 'Finance Group', notes: '', photo: '', registeredAt: '2025-01-15', status: 'active' },
-  { id: 't7', name: 'Linda Martinez', email: 'linda.martinez@email.com', phone: '(555) 789-0123', emergencyContact: 'Jose Martinez (555) 321-0987', address: '321 Main Avenue, Apt A-2, New York, NY', nationalId: 'XXX-XX-7890', occupation: 'Marketing Manager', company: 'Brand Co', notes: 'New tenant, moved in recently.', photo: '', registeredAt: '2026-07-15', status: 'active' },
-  { id: 't8', name: 'Christopher Taylor', email: 'chris.taylor@email.com', phone: '(555) 890-1234', emergencyContact: 'Amy Taylor (555) 210-9876', address: '147 Harbor Way, PH-2, San Francisco, CA', nationalId: 'XXX-XX-8901', occupation: 'Lawyer', company: 'Taylor & Associates', notes: '', photo: '', registeredAt: '2026-07-01', status: 'active' },
+  { id: 't1', name: 'Jennifer Walsh', email: 'jennifer.walsh@email.com', phone: '+91 98765 43210', emergencyContact: 'Mark Walsh (+91 98765 43211)', address: '123 Sunset Blvd, Apt 201, Los Angeles, CA', nationalId: '5482 1234 5678', occupation: 'Software Engineer', company: 'Tech Corp', notes: 'Excellent tenant, always pays on time.', photo: '', registeredAt: '2024-11-01', status: 'active' },
+  { id: 't2', name: 'David Kim', email: 'david.kim@email.com', phone: '+91 98765 43212', emergencyContact: 'Susan Kim (+91 98765 43213)', address: '321 Main Avenue, Apt A-1, New York, NY', nationalId: '6391 2345 6789', occupation: 'Designer', company: 'Creative Studio', notes: 'Prefers email communication.', photo: '', registeredAt: '2025-03-01', status: 'active' },
+  { id: 't3', name: 'Maria Garcia', email: 'maria.garcia@email.com', phone: '+91 98765 43214', emergencyContact: 'Carlos Garcia (+91 98765 43215)', address: '789 Oakwood Drive, Miami, FL', nationalId: '7283 3456 7890', occupation: 'Doctor', company: 'City Hospital', notes: 'Renewing lease next month.', photo: '', registeredAt: '2024-08-01', status: 'active' },
+  { id: 't4', name: 'James Wilson', email: 'james.wilson@email.com', phone: '+91 98765 43216', emergencyContact: 'Linda Wilson (+91 98765 43217)', address: '147 Harbor Way, PH-1, San Francisco, CA', nationalId: '8174 4567 8901', occupation: 'Product Manager', company: 'Innovate Inc', notes: 'Has a service animal.', photo: '', registeredAt: '2024-08-01', status: 'active' },
+  { id: 't5', name: 'Patricia Brown', email: 'patricia.brown@email.com', phone: '+91 98765 43218', emergencyContact: 'Robert Brown (+91 98765 43219)', address: '987 Pine Lane, Studio S-02, Seattle, WA', nationalId: '9285 5678 9012', occupation: 'Teacher', company: 'Lincoln High School', notes: 'Lease ending soon.', photo: '', registeredAt: '2025-06-01', status: 'active' },
+  { id: 't6', name: 'Thomas Lee', email: 'thomas.lee@email.com', phone: '+91 98765 43220', emergencyContact: 'Nancy Lee (+91 98765 43221)', address: '123 Sunset Blvd, Apt 101, Los Angeles, CA', nationalId: '4392 6789 0123', occupation: 'Accountant', company: 'Finance Group', notes: '', photo: '', registeredAt: '2025-01-15', status: 'active' },
+  { id: 't7', name: 'Linda Martinez', email: 'linda.martinez@email.com', phone: '+91 98765 43222', emergencyContact: 'Jose Martinez (+91 98765 43223)', address: '321 Main Avenue, Apt A-2, New York, NY', nationalId: '5281 7890 1234', occupation: 'Marketing Manager', company: 'Brand Co', notes: 'New tenant, moved in recently.', photo: '', registeredAt: '2026-07-15', status: 'active' },
+  { id: 't8', name: 'Christopher Taylor', email: 'chris.taylor@email.com', phone: '+91 98765 43224', emergencyContact: 'Amy Taylor (+91 98765 43225)', address: '147 Harbor Way, PH-2, San Francisco, CA', nationalId: '6172 8901 2345', occupation: 'Lawyer', company: 'Taylor & Associates', notes: '', photo: '', registeredAt: '2026-07-01', status: 'active' },
 ];
 
 export const owners: Owner[] = [
-  { id: 'o1', name: 'Robert Chen', company: 'Chen Properties LLC', email: 'robert@chenproperties.com', phone: '(555) 111-1111', address: '100 Owner Lane, LA, CA', taxNumber: 'TAX-001-223', bankDetails: 'Bank of America ****1234', propertiesOwned: 3 },
-  { id: 'o2', name: 'Emily Rodriguez', company: 'Rodriguez Holdings', email: 'emily@rodriguezholdings.com', phone: '(555) 222-2222', address: '200 Owner Ave, Austin, TX', taxNumber: 'TAX-002-445', bankDetails: 'Chase ****5678', propertiesOwned: 3 },
-  { id: 'o3', name: 'Michael Thompson', company: 'Thompson Estates', email: 'michael@thompsonestates.com', phone: '(555) 333-3333', address: '300 Owner Blvd, Miami, FL', taxNumber: 'TAX-003-667', bankDetails: 'Wells Fargo ****9012', propertiesOwned: 2 },
+  { id: 'o1', name: 'Robert Chen', company: 'Chen Properties LLC', email: 'robert@chenproperties.com', phone: '+91 98765 11111', address: '100 Owner Lane, LA, CA', taxNumber: 'AAACR1234F', bankDetails: 'HDFC Bank - HDFC0001234 / A/C ****1234', propertiesOwned: 3 },
+  { id: 'o2', name: 'Emily Rodriguez', company: 'Rodriguez Holdings', email: 'emily@rodriguezholdings.com', phone: '+91 98765 22222', address: '200 Owner Ave, Austin, TX', taxNumber: 'BBBER5678G', bankDetails: 'ICICI Bank - ICIC0005678 / A/C ****5678', propertiesOwned: 3 },
+  { id: 'o3', name: 'Michael Thompson', company: 'Thompson Estates', email: 'michael@thompsonestates.com', phone: '+91 98765 33333', address: '300 Owner Blvd, Miami, FL', taxNumber: 'CCCMT9012H', bankDetails: 'State Bank of India - SBIN0009012 / A/C ****9012', propertiesOwned: 2 },
 ];
 
 export const leases: Lease[] = [
@@ -124,17 +124,17 @@ export const leases: Lease[] = [
 
 export const payments: Payment[] = [
   { id: 'pay1', invoice: 'INV-2026-001', tenantId: 't1', propertyId: 'p1', unitId: 'u3', tenant: 'Jennifer Walsh', property: 'Sunset Gardens', unit: '201', dueDate: '2026-08-01', paidDate: '2026-08-01', amount: 2400, method: 'Bank Transfer', status: 'paid' },
-  { id: 'pay2', invoice: 'INV-2026-002', tenantId: 't2', propertyId: 'p4', unitId: 'u5', tenant: 'David Kim', property: 'Downtown Lofts', unit: 'A-1', dueDate: '2026-08-01', paidDate: '2026-08-02', amount: 3800, method: 'Credit Card', status: 'paid' },
-  { id: 'pay3', invoice: 'INV-2026-003', tenantId: 't3', propertyId: 'p3', tenant: 'Maria Garcia', property: 'Oakwood Villa', unit: 'Villa', dueDate: '2026-08-05', paidDate: null, amount: 5500, method: 'Bank Transfer', status: 'pending' },
+  { id: 'pay2', invoice: 'INV-2026-002', tenantId: 't2', propertyId: 'p4', unitId: 'u5', tenant: 'David Kim', property: 'Downtown Lofts', unit: 'A-1', dueDate: '2026-08-01', paidDate: '2026-08-02', amount: 3800, method: 'Card', status: 'paid' },
+  { id: 'pay3', invoice: 'INV-2026-003', tenantId: 't3', propertyId: 'p3', tenant: 'Maria Garcia', property: 'Oakwood Villa', unit: 'Villa', dueDate: '2026-08-05', paidDate: null, amount: 5500, method: 'UPI', status: 'pending' },
   { id: 'pay4', invoice: 'INV-2026-004', tenantId: 't4', propertyId: 'p7', unitId: 'u9', tenant: 'James Wilson', property: 'Harbor View Towers', unit: 'PH-1', dueDate: '2026-08-01', paidDate: '2026-08-01', amount: 4200, method: 'Bank Transfer', status: 'paid' },
   { id: 'pay5', invoice: 'INV-2026-005', tenantId: 't5', propertyId: 'p6', unitId: 'u8', tenant: 'Patricia Brown', property: 'Pinecrest Studios', unit: 'S-02', dueDate: '2026-07-03', paidDate: null, amount: 1500, method: 'Cash', status: 'overdue' },
-  { id: 'pay6', invoice: 'INV-2026-006', tenantId: 't6', propertyId: 'p1', unitId: 'u1', tenant: 'Thomas Lee', property: 'Sunset Gardens', unit: '101', dueDate: '2026-08-15', paidDate: '2026-08-10', amount: 1800, method: 'PayPal', status: 'paid' },
+  { id: 'pay6', invoice: 'INV-2026-006', tenantId: 't6', propertyId: 'p1', unitId: 'u1', tenant: 'Thomas Lee', property: 'Sunset Gardens', unit: '101', dueDate: '2026-08-15', paidDate: '2026-08-10', amount: 1800, method: 'UPI', status: 'paid' },
   { id: 'pay7', invoice: 'INV-2026-007', tenantId: 't7', propertyId: 'p4', unitId: 'u6', tenant: 'Linda Martinez', property: 'Downtown Lofts', unit: 'A-2', dueDate: '2026-08-01', paidDate: '2026-08-03', amount: 1800, method: 'Credit Card', status: 'partial' },
   { id: 'pay8', invoice: 'INV-2026-008', tenantId: 't8', propertyId: 'p7', unitId: 'u10', tenant: 'Christopher Taylor', property: 'Harbor View Towers', unit: 'PH-2', dueDate: '2026-08-01', paidDate: '2026-08-01', amount: 4200, method: 'Bank Transfer', status: 'paid' },
   { id: 'pay9', invoice: 'INV-2026-009', tenantId: 't1', propertyId: 'p1', unitId: 'u3', tenant: 'Jennifer Walsh', property: 'Sunset Gardens', unit: '201', dueDate: '2026-07-01', paidDate: '2026-07-01', amount: 2400, method: 'Bank Transfer', status: 'paid' },
-  { id: 'pay10', invoice: 'INV-2026-010', tenantId: 't2', propertyId: 'p4', unitId: 'u5', tenant: 'David Kim', property: 'Downtown Lofts', unit: 'A-1', dueDate: '2026-07-01', paidDate: '2026-07-02', amount: 3800, method: 'Credit Card', status: 'paid' },
+  { id: 'pay10', invoice: 'INV-2026-010', tenantId: 't2', propertyId: 'p4', unitId: 'u5', tenant: 'David Kim', property: 'Downtown Lofts', unit: 'A-1', dueDate: '2026-07-01', paidDate: '2026-07-02', amount: 3800, method: 'Card', status: 'paid' },
   { id: 'pay11', invoice: 'INV-2026-011', tenantId: 't3', propertyId: 'p3', tenant: 'Maria Garcia', property: 'Oakwood Villa', unit: 'Villa', dueDate: '2026-07-05', paidDate: '2026-07-05', amount: 5500, method: 'Bank Transfer', status: 'paid' },
-  { id: 'pay12', invoice: 'INV-2026-012', tenantId: 't4', propertyId: 'p7', unitId: 'u9', tenant: 'James Wilson', property: 'Harbor View Towers', unit: 'PH-1', dueDate: '2026-07-01', paidDate: null, amount: 4200, method: 'Check', status: 'overdue' },
+  { id: 'pay12', invoice: 'INV-2026-012', tenantId: 't4', propertyId: 'p7', unitId: 'u9', tenant: 'James Wilson', property: 'Harbor View Towers', unit: 'PH-1', dueDate: '2026-07-01', paidDate: null, amount: 4200, method: 'UPI', status: 'overdue' },
 ];
 
 export const maintenanceTickets: MaintenanceTicket[] = [
@@ -148,14 +148,14 @@ export const maintenanceTickets: MaintenanceTicket[] = [
 ];
 
 export const staff: Staff[] = [
-  { id: 's1', name: 'Alex Morgan', email: 'alex.morgan@estatehub.com', phone: '(555) 001-0001', role: 'Super Admin', status: 'active', avatar: '', joinedAt: '2023-01-15' },
-  { id: 's2', name: 'Sarah Mitchell', email: 'sarah.mitchell@estatehub.com', phone: '(555) 001-0002', role: 'Property Manager', status: 'active', avatar: '', joinedAt: '2023-03-20' },
-  { id: 's3', name: 'James Park', email: 'james.park@estatehub.com', phone: '(555) 001-0003', role: 'Property Manager', status: 'active', avatar: '', joinedAt: '2023-06-10' },
-  { id: 's4', name: 'Lisa Anderson', email: 'lisa.anderson@estatehub.com', phone: '(555) 001-0004', role: 'Accountant', status: 'active', avatar: '', joinedAt: '2023-09-05' },
-  { id: 's5', name: 'Mike Johnson', email: 'mike.johnson@estatehub.com', phone: '(555) 001-0005', role: 'Maintenance Staff', status: 'active', avatar: '', joinedAt: '2024-02-01' },
-  { id: 's6', name: 'Tom Brady', email: 'tom.brady@estatehub.com', phone: '(555) 001-0006', role: 'Maintenance Staff', status: 'active', avatar: '', joinedAt: '2024-04-15' },
-  { id: 's7', name: 'Sarah Connor', email: 'sarah.connor@estatehub.com', phone: '(555) 001-0007', role: 'Maintenance Staff', status: 'inactive', avatar: '', joinedAt: '2024-05-20' },
-  { id: 's8', name: 'Nina Patel', email: 'nina.patel@estatehub.com', phone: '(555) 001-0008', role: 'Receptionist', status: 'active', avatar: '', joinedAt: '2024-08-01' },
+  { id: 's1', name: 'Alex Morgan', email: 'alex.morgan@estatehub.com', phone: '+91 98765 00001', role: 'Super Admin', status: 'active', avatar: '', joinedAt: '2023-01-15' },
+  { id: 's2', name: 'Sarah Mitchell', email: 'sarah.mitchell@estatehub.com', phone: '+91 98765 00002', role: 'Property Manager', status: 'active', avatar: '', joinedAt: '2023-03-20' },
+  { id: 's3', name: 'James Park', email: 'james.park@estatehub.com', phone: '+91 98765 00003', role: 'Property Manager', status: 'active', avatar: '', joinedAt: '2023-06-10' },
+  { id: 's4', name: 'Lisa Anderson', email: 'lisa.anderson@estatehub.com', phone: '+91 98765 00004', role: 'Accountant', status: 'active', avatar: '', joinedAt: '2023-09-05' },
+  { id: 's5', name: 'Mike Johnson', email: 'mike.johnson@estatehub.com', phone: '+91 98765 00005', role: 'Maintenance Staff', status: 'active', avatar: '', joinedAt: '2024-02-01' },
+  { id: 's6', name: 'Tom Brady', email: 'tom.brady@estatehub.com', phone: '+91 98765 00006', role: 'Maintenance Staff', status: 'active', avatar: '', joinedAt: '2024-04-15' },
+  { id: 's7', name: 'Sarah Connor', email: 'sarah.connor@estatehub.com', phone: '+91 98765 00007', role: 'Maintenance Staff', status: 'inactive', avatar: '', joinedAt: '2024-05-20' },
+  { id: 's8', name: 'Nina Patel', email: 'nina.patel@estatehub.com', phone: '+91 98765 00008', role: 'Receptionist', status: 'active', avatar: '', joinedAt: '2024-08-01' },
 ];
 
 export const documents: DocItem[] = [
@@ -182,7 +182,7 @@ export const calendarEvents: CalendarEvent[] = [
 ];
 
 export const notifications: AppNotification[] = [
-  { id: 'n1', title: 'Rent Due', message: 'Maria Garcia\'s rent of $5,500 is due in 3 days.', type: 'rent_due', read: false, createdAt: '2026-08-02T08:00:00' },
+  { id: 'n1', title: 'Rent Due', message: 'Maria Garcia\'s rent of ₹5,500 is due in 3 days.', type: 'rent_due', read: false, createdAt: '2026-08-02T08:00:00' },
   { id: 'n2', title: 'Overdue Rent', message: 'Patricia Brown\'s rent is 30 days overdue.', type: 'overdue_rent', read: false, createdAt: '2026-08-02T07:30:00' },
   { id: 'n3', title: 'Lease Expiring', message: 'Jennifer Walsh\'s lease expires in 90 days.', type: 'lease_expiring', read: false, createdAt: '2026-08-01T16:00:00' },
   { id: 'n4', title: 'Maintenance Assigned', message: 'AC repair ticket assigned to Mike Johnson.', type: 'maintenance_assigned', read: false, createdAt: '2026-07-30T10:00:00' },

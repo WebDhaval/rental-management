@@ -63,7 +63,8 @@ export interface Owner {
   email: string;
   phone: string;
   address: string;
-  taxNumber: string;
+  taxNumber: string; // PAN (e.g. ABCDE1234F)
+  gstin?: string; // Optional GSTIN for businesses
   bankDetails: string;
   propertiesOwned: number;
 }
@@ -88,7 +89,7 @@ export interface Lease {
 }
 
 export type PaymentStatus = 'paid' | 'pending' | 'overdue' | 'partial';
-export type PaymentMethod = 'Bank Transfer' | 'Credit Card' | 'Cash' | 'Check' | 'PayPal';
+export type PaymentMethod = 'UPI' | 'Bank Transfer' | 'Cash' | 'Card' | 'Credit Card' | 'Check' | 'PayPal';
 
 export interface Payment {
   id: ID;

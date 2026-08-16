@@ -281,12 +281,12 @@ function TenantFormModal({ tenant, onSave, onClose, saving }: { tenant: Tenant |
           <FieldGroup label="Email" required><Input type="email" value={form.email} onChange={(e) => update({ email: e.target.value })} placeholder="john@email.com" /></FieldGroup>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FieldGroup label="Phone"><Input value={form.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="(555) 123-4567" /></FieldGroup>
-          <FieldGroup label="Emergency Contact"><Input value={form.emergencyContact} onChange={(e) => update({ emergencyContact: e.target.value })} placeholder="Name (phone)" /></FieldGroup>
+          <FieldGroup label="Phone"><Input value={form.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+91 98765 43210" /></FieldGroup>
+          <FieldGroup label="Emergency Contact"><Input value={form.emergencyContact} onChange={(e) => update({ emergencyContact: e.target.value })} placeholder="Name (+91 98765 43210)" /></FieldGroup>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FieldGroup label="Address"><Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Current address" /></FieldGroup>
-          <FieldGroup label="National ID"><Input value={form.nationalId} onChange={(e) => update({ nationalId: e.target.value })} placeholder="XXX-XX-XXXX" /></FieldGroup>
+          <FieldGroup label="Address"><Input value={form.address} onChange={(e) => update({ address: e.target.value })} placeholder="Street address, City, PIN Code" /></FieldGroup>
+          <FieldGroup label="Government ID / ID Number"><Input value={form.nationalId} onChange={(e) => update({ nationalId: e.target.value })} placeholder="e.g. 1234 5678 9012 or Voter ID" /></FieldGroup>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <FieldGroup label="Occupation"><Input value={form.occupation} onChange={(e) => update({ occupation: e.target.value })} placeholder="Software Engineer" /></FieldGroup>

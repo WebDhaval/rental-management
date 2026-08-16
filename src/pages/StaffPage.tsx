@@ -306,7 +306,7 @@ function StaffFormModal({ staff, onSave, onClose, saving }: { staff: Staff | nul
           <FieldGroup label="Email" required><Input type="email" value={form.email} onChange={(e) => update({ email: e.target.value })} placeholder="staff@domain.com" /></FieldGroup>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <FieldGroup label="Phone"><Input value={form.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="(555) 000-0000" /></FieldGroup>
+          <FieldGroup label="Phone"><Input value={form.phone} onChange={(e) => update({ phone: e.target.value })} placeholder="+91 98765 43210" /></FieldGroup>
           <FieldGroup label="Role">
             <Select value={form.role} onChange={(e) => update({ role: e.target.value as StaffRole })}>
               {roles.map((r) => <option key={r} value={r}>{r}</option>)}
